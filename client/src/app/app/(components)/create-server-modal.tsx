@@ -81,9 +81,9 @@ const CreateServerModal = ({
                 Voltar
               </button>
               <button
-                className="bg-[#5865f2] py-3 px-6 text-sm rounded-md hover:bg-[#5865f2]/80"
+                className="bg-[#5865f2] disabled:bg-[#5865f2]/80 py-3 px-6 text-sm rounded-md hover:bg-[#5865f2]/80"
                 type="submit"
-                disabled={isLoadingSelf || creatingServer}
+                disabled={isLoadingSelf || creatingServer || serverName.length < 1}
               >
                 Criar
               </button>

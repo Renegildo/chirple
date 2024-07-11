@@ -1,12 +1,14 @@
-import { Edit, Trash } from "lucide-react";
+import { Copy, Edit, Trash } from "lucide-react";
 
 const MessageActions = ({
   handleDelete,
   handleEdit,
+  handleCopy,
   isDeleted,
 }: {
   handleDelete: () => void;
   handleEdit: () => void;
+  handleCopy: () => void;
   isDeleted: boolean;
 }) => {
   return (
@@ -16,15 +18,21 @@ const MessageActions = ({
     >
       <button
         className='bg-[#313338] hover:bg-[#383a40] p-2 transition-colors'
+        onClick={handleDelete}
+      >
+        <Trash className='h-4 w-4' />
+      </button>
+      <button
+        className='bg-[#313338] hover:bg-[#383a40] p-2 transition-colors'
         onClick={handleEdit}
       >
         <Edit className='h-4 w-4' />
       </button>
       <button
         className='bg-[#313338] hover:bg-[#383a40] p-2 transition-colors'
-        onClick={handleDelete}
+        onClick={handleCopy}
       >
-        <Trash className='h-4 w-4' />
+        <Copy className='h-4 w-4' />
       </button>
     </div>
   );

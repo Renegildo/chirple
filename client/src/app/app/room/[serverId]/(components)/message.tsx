@@ -124,11 +124,13 @@ const MessageComponent = ({
         <div
           className="group flex items-start px-5 gap-2 hover:bg-black/10 mt-2 relative"
         >
-          {self?.id === message.ownerId && <MessageActions
-            handleDelete={() => setDeleteModal(true)}
-            handleEdit={() => setEditing(!editing)}
-            isDeleted={message.isDeleted}
-          />}
+          {self?.id === message.ownerId &&
+            <MessageActions
+              handleDelete={() => setDeleteModal(true)}
+              handleEdit={() => setEditing(!editing)}
+              handleCopy={() => navigator.clipboard.writeText(message.message)}
+              isDeleted={message.isDeleted}
+            />}
           <div
             className="h-10 w-10 mt-1.5 rounded-full bg-[#26282E] flex items-center justify-center cursor-pointer"
             onClick={() => setUserCardOpen(true)}
@@ -197,6 +199,7 @@ const MessageComponent = ({
             handleDelete={() => setDeleteModal(true)}
             isDeleted={message.isDeleted}
             handleEdit={() => setEditing(!editing)}
+            handleCopy={() => navigator.clipboard.writeText(message.message)}
           />}
           {!editing ? (
             <span className='flex items-end gap-1 pl-[68px]'>

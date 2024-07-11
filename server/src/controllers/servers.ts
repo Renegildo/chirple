@@ -15,9 +15,10 @@ import {
 
 export const createServer = async (req: IRequest, res: express.Response) => {
   try {
-    const { name, description, userId } = req.body;
+    const { name, description } = req.body;
+    if (!name) return res.sendStatus(400);
 
-    const server = await newServer(name, description, userId);
+    const server = await newServer(name, description, req.user.id);
 
     return res.status(200).json(server);
   } catch (error) {

@@ -72,8 +72,9 @@ const ChannelConfigurationModal = ({
             Cancelar
           </button>
           <button
-            className="bg-[#5865f2] hover:bg-[#4f5acb] text-sm px-5 py-3 rounded-md transition-colors"
+            className="bg-[#5865f2] disabled:bg-[#4f5acb] hover:bg-[#4f5acb] text-sm px-5 py-3 rounded-md transition-colors"
             onClick={handleEdit}
+            disabled={name.length < 1}
           >
             Confirmar
           </button>

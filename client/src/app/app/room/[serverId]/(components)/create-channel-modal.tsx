@@ -66,11 +66,13 @@ const CreateChannelModal = ({
             <button
               className="hover:text-white/50 text-white/80 transition-colors"
               onClick={() => setVisible(false)}
+              type="button"
             >
               Cancelar
             </button>
             <button
-              className="bg-[#5865f2] px-5 py-3 text-sm rounded-md hover:bg-[#4752c4] transition-colors"
+              className="bg-[#5865f2] disabled:bg-[#434cba] px-5 py-3 text-sm rounded-md hover:bg-[#4752c4] transition-colors"
+              disabled={channelName.length < 1}
               type="submit"
             >
               Criar Canal

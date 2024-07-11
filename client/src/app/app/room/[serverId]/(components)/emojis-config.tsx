@@ -132,8 +132,9 @@ const EmojisConfig = ({
               Cancelar
             </button>
             <button
-              className="bg-[#5865f2] hover:bg-[#4f5acb] px-5 py-3 rounded-md text-sm"
+              className="bg-[#5865f2] disabled:bg-[#4f5acb] hover:bg-[#4f5acb] px-5 py-3 rounded-md text-sm"
               onClick={handleCreate}
+              disabled={code.length < 1 || imageUrl.length < 1}
             >
               Criar emoji
             </button>
