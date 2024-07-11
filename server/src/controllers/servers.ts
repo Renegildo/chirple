@@ -81,9 +81,15 @@ export const joinServer = async (req: IRequest, res: express.Response) => {
 
 export const leaveServer = async (req: IRequest, res: express.Response) => {
   try {
-    const { userId, serverId } = req.body;
+    const { serverId } = req.body;
 
-    await leaveServerDb(serverId, userId);
+    const server = await getServer(serverId);
+
+    if (server.ownerId === req.user.id) {
+      return res.sendStatus(403);
+    }
+
+    await leaveServerDb(serverId, req.user.id);
 
     return res.sendStatus(200);
   } catch (error) {
@@ -160,7 +166,7 @@ export const banUser = async (req: IRequest, res: express.Response) => {
   try {
     const { userId, serverId } = req.body;
 
-    if (!userId || !serverId) {
+    if (!userId || !serverId || userId === req.user.id) {
       return res.sendStatus(400);
     }
 
