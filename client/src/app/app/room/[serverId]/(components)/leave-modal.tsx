@@ -19,9 +19,9 @@ const LeaveModal = ({
   const router = useRouter();
 
   const handleLeave = async () => {
-    if (!self?.id) return
+    if (!self?.id) return;
 
-    await leaveServer(server.id, self.id);
+    await leaveServer(server.id);
 
     router.push("/app");
   }

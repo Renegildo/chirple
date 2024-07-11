@@ -187,10 +187,10 @@ export const banUser = async (serverId: string, userId: string) => {
   return bannedUser.data;
 }
 
-export const leaveServer = async (serverId: string, userId: string) => {
+export const leaveServer = async (serverId: string) => {
   const leaveServerResponse = await api.post(
     "/leave",
-    { serverId, userId }
+    { serverId }
   );
 
   return leaveServerResponse;

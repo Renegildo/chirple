@@ -101,17 +101,19 @@ const ChannelServerModal = ({
               />
             </button>
           }
-          <button
-            className="hover:bg-[#da373c] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
-            onClick={() => setLeaveModalVisible(true)}
-          >
-            <span>
-              Sair
-            </span>
-            <DoorOpen
-              className="h-4 w-4"
-            />
-          </button>
+          {!isOwner &&
+            <button
+              className="hover:bg-[#da373c] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
+              onClick={() => setLeaveModalVisible(true)}
+            >
+              <span>
+                Sair
+              </span>
+              <DoorOpen
+                className="h-4 w-4"
+              />
+            </button>
+          }
           {isOwner &&
             <button
               className="hover:bg-[#da373c] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"

@@ -43,11 +43,13 @@ const ChannelButton = ({
           </button>
         </div>
       </Link>
+
       <ChannelConfigurationModal
         visible={channelConfig}
         setVisible={setChannelConfig}
         channel={channel}
       />
+
       <DeleteChannelModal
         channel={channel}
         setVisible={setChannelDelete}
