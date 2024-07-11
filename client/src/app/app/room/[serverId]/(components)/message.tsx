@@ -9,6 +9,7 @@ import { useState } from 'react';
 import UserCard from './user-card';
 import { Check } from 'lucide-react';
 import useSelf from '@/hooks/useSelf';
+import UserPicture from '@/app/app/(components)/user-picture';
 
 const MessageComponent = ({
   message,
@@ -93,7 +94,9 @@ const MessageComponent = ({
           />
           <div className='z-30 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#313338] rounded-lg'>
             <div className='p-5 rounded-t-lg'>
-              <h1 className='font-bold text-2xl'>Deletar mensagem</h1>
+              <h1 className='font-bold text-2xl'>
+                Deletar mensagem
+              </h1>
               <p className='text-sm text-white/50'>
                 Voce tem certeza que deseja deletar a mensagem?
               </p>
@@ -127,22 +130,13 @@ const MessageComponent = ({
             isDeleted={message.isDeleted}
           />}
           <div
-            className="h-10 min-w-10 mt-1.5 rounded-full bg-[#1e1f22] flex items-center justify-center cursor-pointer"
+            className="h-10 w-10 mt-1.5 rounded-full bg-[#26282E] flex items-center justify-center cursor-pointer"
             onClick={() => setUserCardOpen(true)}
           >
-            {message.owner?.imageUrl ? (
-              <Image
-                width={40}
-                height={40}
-                src={message.owner.imageUrl}
-                alt={message.owner.username[0].toUpperCase()}
-                className='rounded-full h-10 w-10 object-fill'
-              />
-            ) : (
-              <span>
-                {message.owner?.username[0].toUpperCase() || "U"}
-              </span>
-            )}
+            <UserPicture
+              imageUrl={message.owner?.imageUrl}
+              username={message.owner?.username}
+            />
           </div>
           <div className="flex flex-col py-1">
             <div className='flex gap-1 items-center'>

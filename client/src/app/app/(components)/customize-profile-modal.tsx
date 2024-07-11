@@ -2,6 +2,7 @@ import { User } from "@/utils/types";
 import { Dispatch, SetStateAction, useState } from "react";
 import Image from 'next/image';
 import { updateUser } from "@/utils/api";
+import UserPicture from "./user-picture";
 
 const CustomizeProfileModal = ({
   visible,
@@ -67,13 +68,10 @@ const CustomizeProfileModal = ({
 
           <div className="w-96 bg-[#313338] border-l border-white/10 rounded-tr-md p-5">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-12 h-12 rounded-full">
-                <Image
-                  src={user.imageUrl || ""}
-                  alt="pfp"
-                  width={100}
-                  height={100}
-                  className="object-fill w-12 h-12 rounded-full"
+              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-[#26282E]">
+                <UserPicture
+                  username={user.username}
+                  imageUrl={user.imageUrl}
                 />
               </div>
               <h1 className="text-lg font-bold">

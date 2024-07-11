@@ -58,8 +58,9 @@ const DeleteServerModal = ({
             Cancelar
           </button>
           <button
-            className="text-sm px-5 py-3 rounded-md transition-colors hover:bg-[#a12828] bg-[#da373c]"
+            className="text-sm px-5 py-3 rounded-md transition-colors hover:bg-[#a12828] bg-[#da373c] disabled:bg-[#b52d31]"
             onClick={handleDelete}
+            disabled={serverName !== server.name}
           >
             Deletar
           </button>

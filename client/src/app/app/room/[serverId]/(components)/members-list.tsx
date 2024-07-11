@@ -6,6 +6,7 @@ import { ServerUser, User } from "@/utils/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import UserCard from './user-card';
+import UserPicture from '@/app/app/(components)/user-picture';
 
 const MembersList = ({
   membersListOpen,
@@ -53,20 +54,12 @@ const MembersList = ({
             key={member.userId}
             onClick={() => handleUserClick(member.user)}
           >
-            {member.user.imageUrl ? (
-              <Image
-                src={member.user.imageUrl || ""}
-                width={44}
-                height={44}
-                alt={"pfp"}
-                className='h-9 w-9 rounded-full'
+            <div className='w-9 h-9 bg-[#26282E] rounded-full flex items-center justify-center'>
+              <UserPicture
+                username={member.user.username}
+                imageUrl={member.user.imageUrl}
               />
-            ) : (
-              <div className='bg-[#313338] h-9 w-9 rounded-full flex items-center justify-center'>
-                {member.user.username[0]}
-                {member.user.username[1]}
-              </div>
-            )}
+            </div>
             <p className='text-white/80 font-medium'>
               {member.user.username}
             </p>

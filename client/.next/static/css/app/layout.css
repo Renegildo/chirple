@@ -868,6 +868,9 @@ video {
 .w-screen {
   width: 100vw;
 }
+.w-8 {
+  width: 2rem;
+}
 .min-w-0 {
   min-width: 0px;
 }
@@ -1132,6 +1135,10 @@ video {
 .bg-white\/5 {
   background-color: rgb(255 255 255 / 0.05);
 }
+.bg-\[\#26282E\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(38 40 46 / var(--tw-bg-opacity));
+}
 .object-fill {
   object-fit: fill;
 }
@@ -1235,10 +1242,6 @@ video {
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
-}
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
 }
 .text-xs {
   font-size: 0.75rem;
@@ -1358,6 +1361,11 @@ video {
 }
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+.transition {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -1488,6 +1496,19 @@ body {
 .disabled\:bg-\[\#2a2b30\]:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(42 43 48 / var(--tw-bg-opacity));
+}
+
+.disabled\:bg-\[\#da373c\/90\]:disabled {
+  background-color: #da373c/90;
+}
+
+.disabled\:bg-\[b52d3\#1\]:disabled {
+  background-color: b52d3#1;
+}
+
+.disabled\:bg-\[\#b52d31\]:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(181 45 49 / var(--tw-bg-opacity));
 }
 
 .group:hover .group-hover\:scale-100 {

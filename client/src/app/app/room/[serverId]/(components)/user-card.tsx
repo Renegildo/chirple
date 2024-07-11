@@ -1,5 +1,5 @@
+import UserPicture from "@/app/app/(components)/user-picture";
 import { User } from "@/utils/types";
-import Image from 'next/image';
 
 const UserCard = ({
   user,
@@ -14,13 +14,13 @@ const UserCard = ({
       ${left ? "fixed right-56" : "absolute left-16 -top-20"}`}
     >
       <div className="bg-[#111214] p-4 rounded-md mt-8 w-72">
-        <Image
-          width={100}
-          height={100}
-          src={user?.imageUrl || ''}
-          alt="pfp"
-          className="rounded-full w-20 h-20 object-fill absolute -top-10 border-4 border-[#232428]"
-        />
+        <div className="w-20 h-20 rounded-full object-fill absolute -top-10 border-4 border-[#232428] flex items-center justify-center bg-[#313338]">
+          <UserPicture
+            username={user?.username}
+            imageUrl={user?.imageUrl}
+            className="rounded-full"
+          />
+        </div>
         <h1 className="text-lg font-bold">
           {user?.username || "USUARIO DELETADO"}
         </h1>
@@ -30,7 +30,7 @@ const UserCard = ({
             SOBRE MIM
           </h2>
           <p className="text-sm">
-            {user?.aboutMe || "USUARIO DELETADO"}
+            {user?.aboutMe || "Usuario nao tem sobre mim"}
           </p>
         </div>
       </div>
