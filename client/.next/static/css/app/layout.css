@@ -659,6 +659,9 @@ video {
 .m-5 {
   margin: 1.25rem;
 }
+.m-auto {
+  margin: auto;
+}
 .mx-10 {
   margin-left: 2.5rem;
   margin-right: 2.5rem;
@@ -870,6 +873,9 @@ video {
 }
 .w-8 {
   width: 2rem;
+}
+.w-36 {
+  width: 9rem;
 }
 .min-w-0 {
   min-width: 0px;

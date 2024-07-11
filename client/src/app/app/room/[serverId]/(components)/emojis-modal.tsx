@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Emoji } from '@/utils/types';
 import { getEmojisByServerId } from "@/utils/api";
 import Image from 'next/image';
+import { Frown } from "lucide-react";
 
 const EmojisModal = ({
   visible,
@@ -18,14 +19,17 @@ const EmojisModal = ({
 }) => {
   const [emojis, setEmojis] = useState<Emoji[]>([]);
   const [hoveringEmoji, setHoveringEmoji] = useState<Emoji | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEmojis = async () => {
       if (!serverId) return;
 
+      setIsLoading(true);
       const newEmojis = await getEmojisByServerId(serverId);
 
       setEmojis(newEmojis);
+      setIsLoading(false);
     }
 
     fetchEmojis();
@@ -42,7 +46,7 @@ const EmojisModal = ({
         className={"absolute -top-[225px] max-h-48 -left-[500px] shadow-lg shadow-black/50 rounded-md z-30 w-[500px]"}
       >
         <div className="bg-[#2b2d31] grid grid-cols-9 p-2 rounded-t-md gap-1 max-h-96 overflow-y-scroll">
-          {emojis.map(emoji => (
+          {!isLoading && emojis.length > 0 ? emojis.map(emoji => (
             <button
               className="hover:bg-white/10 p-1 rounded-md"
               onMouseEnter={() => setHoveringEmoji(emoji)}
@@ -57,7 +61,20 @@ const EmojisModal = ({
                 className="rounded-md aspect-square"
               />
             </button>
-          ))}
+          )) : (
+            !isLoading && emojis.length === 0 ? (
+              <div className="flex flex-col w-36 items-center m-auto">
+                <Frown className="h-8 w-8" />
+                <p className="text-sm text-white/50 text-center">
+                  Nenhum emoji encontrado
+                </p>
+              </div>
+            ) : (
+              <p>
+                Carregando emojis...
+              </p>
+            )
+          )}
         </div>
         <div className="bg-[#111214] p-2 rounded-b-md">
           {hoveringEmoji && (<div className="flex items-center gap-2">
