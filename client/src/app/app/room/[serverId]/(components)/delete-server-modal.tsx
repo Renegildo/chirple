@@ -1,5 +1,8 @@
+"use client";
+
 import { deleteServer } from "@/utils/api";
 import { Server } from "@/utils/types";
+import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 
 const DeleteServerModal = ({
@@ -12,13 +15,14 @@ const DeleteServerModal = ({
   setVisible: Dispatch<SetStateAction<boolean>>
 }) => {
   const [serverName, setServerName] = useState<string>("");
+  const router = useRouter();
 
   const handleDelete = async () => {
     if (!server || !server.id) return;
     if (serverName !== server.name) return;
 
     const deletedServer = await deleteServer(server.id);
-    console.log(deletedServer);
+    router.replace("/app");
 
     setVisible(false);
   }
