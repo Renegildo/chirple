@@ -67,8 +67,8 @@ export const getInviteById = async (id: string) => {
   return invite;
 }
 
-export const joinServer = async (serverId: string) => {
-  const joinResponse = await api.post("/join", { serverId });
+export const joinServer = async (inviteId: string) => {
+  const joinResponse = await api.post("/join", { inviteId });
 
   return joinResponse.data;
 }

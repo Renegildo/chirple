@@ -12,6 +12,7 @@ import {
   getMembersInServer,
   getMemberByUserIdServerId,
 } from '../db/servers';
+import { deleteInvite, getInviteById, useInvite } from '../db/invites';
 
 export const createServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -61,17 +62,26 @@ export const getServerById = async (req: IRequest, res: express.Response) => {
 
 export const joinServer = async (req: IRequest, res: express.Response) => {
   try {
-    const { serverId } = req.body;
+    const { inviteId } = req.body;
     const userId = req.user.id;
 
-    if (!userId || !serverId) {
+    if (!inviteId) {
       return res.sendStatus(400);
     }
 
-    const existingMember = await getMemberByUserIdServerId(req.user.id, serverId);
+    const invite = await getInviteById(inviteId);
+    if (!invite) return res.sendStatus(400);
+
+    if (invite.uses <= 0) {
+      await deleteInvite(invite.id);
+      return res.sendStatus(400);
+    }
+
+    const existingMember = await getMemberByUserIdServerId(userId, invite.serverId);
     if (existingMember) return res.sendStatus(409);
 
-    const serverUser = await enterServer(serverId, userId);
+    const serverUser = await enterServer(invite.serverId, userId);
+    await useInvite(invite.id);
 
     return res.status(200).json(serverUser);
   } catch (error) {

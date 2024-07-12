@@ -17,3 +17,21 @@ export const getInviteById = async (id: string) => {
   return invite;
 }
 
+export const useInvite = async (id: string) => {
+  await db.invite.update({
+    where: { id },
+    data: {
+      uses: {
+        decrement: 1
+      },
+    },
+  });
+}
+
+export const deleteInvite = async (id: string) => {
+  const deletedInvite = await db.invite.delete({
+    where: { id },
+  });
+
+  return deletedInvite;
+}

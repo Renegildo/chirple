@@ -26,9 +26,10 @@ const invitePage = () => {
 
   const handleAcceptInvite = async () => {
     if (!invite?.id) return router.push("/app");
+    console.log(invite);
 
     try {
-      await joinServer(invite.server.id);
+      await joinServer(invite.id);
       const firstChannelUrl = `/app/room/${invite.server.id}/${invite.server.channels[0].id}`;
       router.push(firstChannelUrl);
     } catch (error: any) {
@@ -50,7 +51,7 @@ const invitePage = () => {
         <h1 className="text-2xl font-bold my-5">
           {isLoading ? (
             <Skeleton className="h-10 w-60 rounded-md" />
-          ) : invite?.server.name}
+          ) : !invite || invite.uses <= 0 ? "Convite invalido" : invite.server.name}
         </h1>
         <button
           className="bg-[#5865f2] hover:bg-[#4752c4] transition-colors py-3 px-4 rounded-md"

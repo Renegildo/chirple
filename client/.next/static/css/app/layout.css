@@ -817,6 +817,9 @@ video {
 .w-32 {
   width: 8rem;
 }
+.w-36 {
+  width: 9rem;
+}
 .w-4 {
   width: 1rem;
 }
@@ -837,6 +840,9 @@ video {
 }
 .w-72 {
   width: 18rem;
+}
+.w-8 {
+  width: 2rem;
 }
 .w-9 {
   width: 2.25rem;
@@ -870,12 +876,6 @@ video {
 }
 .w-screen {
   width: 100vw;
-}
-.w-8 {
-  width: 2rem;
-}
-.w-36 {
-  width: 9rem;
 }
 .min-w-0 {
   min-width: 0px;
@@ -1090,6 +1090,10 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(35 36 40 / var(--tw-bg-opacity));
 }
+.bg-\[\#26282E\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(38 40 46 / var(--tw-bg-opacity));
+}
 .bg-\[\#2b2d31\] {
   --tw-bg-opacity: 1;
   background-color: rgb(43 45 49 / var(--tw-bg-opacity));
@@ -1140,10 +1144,6 @@ video {
 }
 .bg-white\/5 {
   background-color: rgb(255 255 255 / 0.05);
-}
-.bg-\[\#26282E\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(38 40 46 / var(--tw-bg-opacity));
 }
 .object-fill {
   object-fit: fill;
@@ -1370,11 +1370,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-.transition {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
 .duration-200 {
   transition-duration: 200ms;
 }
@@ -1504,35 +1499,23 @@ body {
   background-color: rgb(42 43 48 / var(--tw-bg-opacity));
 }
 
-.disabled\:bg-\[\#da373c\/90\]:disabled {
-  background-color: #da373c/90;
-}
-
-.disabled\:bg-\[b52d3\#1\]:disabled {
-  background-color: b52d3#1;
-}
-
-.disabled\:bg-\[\#b52d31\]:disabled {
-  --tw-bg-opacity: 1;
-  background-color: rgb(181 45 49 / var(--tw-bg-opacity));
-}
-
-.disabled\:bg-\[434cba\]:disabled {
-  background-color: 434cba;
-}
-
 .disabled\:bg-\[\#434cba\]:disabled {
   --tw-bg-opacity: 1;
   background-color: rgb(67 76 186 / var(--tw-bg-opacity));
+}
+
+.disabled\:bg-\[\#4f5acb\]:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgb(79 90 203 / var(--tw-bg-opacity));
 }
 
 .disabled\:bg-\[\#5865f2\]\/80:disabled {
   background-color: rgb(88 101 242 / 0.8);
 }
 
-.disabled\:bg-\[\#4f5acb\]:disabled {
+.disabled\:bg-\[\#b52d31\]:disabled {
   --tw-bg-opacity: 1;
-  background-color: rgb(79 90 203 / var(--tw-bg-opacity));
+  background-color: rgb(181 45 49 / var(--tw-bg-opacity));
 }
 
 .group:hover .group-hover\:scale-100 {

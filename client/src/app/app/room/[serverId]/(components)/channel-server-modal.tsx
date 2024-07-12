@@ -31,7 +31,7 @@ const ChannelServerModal = ({
 
   const generateInvite = async () => {
     if (!server || !server.id) return;
-    const newInvite = await createInvite(server.id, "2020-12-09T16:09:53+00:00", 10);
+    const newInvite = await createInvite(server.id, "2020-12-09T16:09:53+00:00", 1);
 
     setInvite(newInvite);
   }
