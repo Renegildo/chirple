@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Ban } from "lucide-react";
 import { banUser } from "@/utils/api";
 import { socket } from "@/socket";
+import UserPicture from "@/app/app/(components)/user-picture";
 
 const MembersConfig = ({
   visible,
@@ -66,13 +67,12 @@ const MembersConfig = ({
                   <tbody key={i}>
                     <tr className="hover:bg-white/10 items-center transition-colors duration-75 last:rounded-b-md">
                       <th scope="row" className="p-2">
-                        <Image
-                          src={member.user.imageUrl || ""}
-                          alt={member.user.username}
-                          width={40}
-                          height={40}
-                          className="aspect-square"
-                        />
+                        <div className="bg-[#313338] w-12 h-12 rounded-full flex items-center justify-center">
+                          <UserPicture
+                            username={member.user.username}
+                            imageUrl={member.user.imageUrl}
+                          />
+                        </div>
                       </th>
                       <th scope="row" className="text-start p-2">
                         {member.user.username}
