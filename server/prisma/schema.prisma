@@ -67,6 +67,8 @@ model Invite {
   server    Server   @relation(fields: [serverId], references: [id], onDelete: Cascade)
   uses      Int
   expiresIn DateTime
+
+  createdAt DateTime @default(now())
 }
 
 model Message {
