@@ -132,7 +132,7 @@ const MessageComponent = ({
               isDeleted={message.isDeleted}
             />}
           <div
-            className="h-10 w-10 mt-1.5 rounded-full bg-[#26282E] flex items-center justify-center cursor-pointer"
+            className="h-10 min-w-10 mt-1.5 rounded-full bg-[#26282E] flex items-center justify-center cursor-pointer"
             onClick={() => setUserCardOpen(true)}
           >
             <UserPicture
