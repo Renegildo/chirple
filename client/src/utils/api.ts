@@ -195,3 +195,15 @@ export const leaveServer = async (serverId: string) => {
 
   return leaveServerResponse;
 }
+
+export const getInvitesByServerId = async (serverId: string) => {
+  const invites = await api.get(`/invites/${serverId}`);
+
+  return invites.data;
+}
+
+export const deleteInvite = async (inviteId: string) => {
+  const deletedInvite = await api.delete(`/invite/${inviteId}`);
+
+  return deletedInvite.data;
+}

@@ -3,6 +3,8 @@ import express from 'express';
 import {
   createInvite as newInvite,
   getInviteById as getInvite,
+  getInvitesByServerId as getInvitesByServerIdDb,
+  deleteInvite as deleteInviteDb,
 } from '../db/invites';
 import { getServerById } from '../db/servers';
 
@@ -51,3 +53,45 @@ export const getInviteById = async (req: IRequest, res: express.Response) => {
     return res.sendStatus(400);
   }
 }
+
+export const getInvitesByServerId = async (req: IRequest, res: express.Response) => {
+  try {
+    const { serverId } = req.params;
+
+    if (!serverId) {
+      return res.sendStatus(400);
+    }
+
+    const server = await getServerById(serverId);
+
+    if (server.ownerId !== req.user.id) {
+      return res.sendStatus(403);
+    }
+
+    const invites = await getInvitesByServerIdDb(serverId);
+
+    return res.status(200).json(invites);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}
+
+export const deleteInvite = async (req: IRequest, res: express.Response) => {
+  try {
+    const { inviteId } = req.params;
+
+    if (!inviteId) {
+      return res.sendStatus(400);
+    }
+
+    console.log("inviteId: ", inviteId);
+    const deletedInvite = await deleteInviteDb(inviteId);
+
+    return res.status(200).json(deletedInvite);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}
+

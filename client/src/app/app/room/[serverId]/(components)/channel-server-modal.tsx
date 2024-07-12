@@ -1,4 +1,4 @@
-import { Bolt, DoorOpen, SmilePlus, Trash, UserRoundPlus, Users } from "lucide-react";
+import { Bolt, DoorOpen, Mails, SmilePlus, Trash, UserRoundPlus, Users } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import CreateInviteModal from "./create-invite-modal";
 import { Server } from "@/utils/types";
@@ -8,6 +8,7 @@ import EmojisConfig from "./emojis-config";
 import MembersConfig from "./members-config";
 import useSelf from "@/hooks/useSelf";
 import LeaveModal from "./leave-modal";
+import InvitesModal from "./invites-modal";
 
 const ChannelServerModal = ({
   visible,
@@ -26,10 +27,7 @@ const ChannelServerModal = ({
   const [emojisConfigVisible, setEmojisConfigVisible] = useState<boolean>(false);
   const [membersConfigVisible, setMembersConfigVisible] = useState<boolean>(false);
   const [leaveModalVisible, setLeaveModalVisible] = useState<boolean>(false);
-
-  const handleCreateInvite = async () => {
-    setCreateInviteModalVisible(true);
-  }
+  const [inviteModalVisible, setInviteModalVisible] = useState<boolean>(false);
 
   const isOwner = self?.id === server?.ownerId;
 
@@ -43,7 +41,7 @@ const ChannelServerModal = ({
         <div className="flex flex-col gap-2 text-sm font-semibold">
           <button
             className="hover:bg-[#5865f2] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
-            onClick={handleCreateInvite}
+            onClick={() => setCreateInviteModalVisible(true)}
           >
             <span>
               Criar convite
@@ -87,6 +85,19 @@ const ChannelServerModal = ({
                 Membros
               </span>
               <Users
+                className="h-4 w-4"
+              />
+            </button>
+          }
+          {isOwner &&
+            <button
+              className="hover:bg-[#5865f2] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
+              onClick={() => setInviteModalVisible(true)}
+            >
+              <span>
+                Convites
+              </span>
+              <Mails
                 className="h-4 w-4"
               />
             </button>
@@ -154,6 +165,11 @@ const ChannelServerModal = ({
         setVisible={setLeaveModalVisible}
         visible={leaveModalVisible}
         server={server}
+      />
+
+      <InvitesModal
+        visible={inviteModalVisible}
+        setVisible={setInviteModalVisible}
       />
     </div>
   );

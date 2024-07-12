@@ -35,3 +35,12 @@ export const deleteInvite = async (id: string) => {
 
   return deletedInvite;
 }
+
+export const getInvitesByServerId = async (serverId: string) => {
+  const invites = await db.invite.findMany({
+    where: { serverId },
+  });
+
+  return invites;
+}
+

@@ -34,6 +34,7 @@ const MembersConfig = ({
         className="fixed top-0 left-0 w-full h-full bg-black/50 z-20"
         onClick={() => setVisible(false)}
       />
+
       <div className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
         <div className="bg-[#313338] p-5 rounded-lg max-h-96 overflow-y-scroll flex flex-col justify-between">
           <div>
