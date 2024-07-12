@@ -72,7 +72,12 @@ export const joinServer = async (req: IRequest, res: express.Response) => {
     const invite = await getInviteById(inviteId);
     if (!invite) return res.sendStatus(400);
 
-    if (invite.uses <= 0) {
+    const now = new Date();
+    const inviteExpireDate = new Date(invite.expiresIn);
+
+    const expiredInvite = now.getTime() > inviteExpireDate.getTime();
+
+    if (invite.uses <= 0 || expiredInvite) {
       await deleteInvite(invite.id);
       return res.sendStatus(400);
     }
