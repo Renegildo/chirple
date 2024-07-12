@@ -26,7 +26,6 @@ const invitePage = () => {
 
   const handleAcceptInvite = async () => {
     if (!invite?.id) return router.push("/app");
-    console.log(invite);
 
     try {
       await joinServer(invite.id);

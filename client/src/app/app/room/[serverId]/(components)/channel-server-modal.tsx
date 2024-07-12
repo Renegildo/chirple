@@ -1,8 +1,7 @@
 import { Bolt, DoorOpen, SmilePlus, Trash, UserRoundPlus, Users } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import CreateInviteModal from "./create-invite-modal";
-import { Invite, Server } from "@/utils/types";
-import { createInvite } from "@/utils/api";
+import { Server } from "@/utils/types";
 import ServerConfigurationModal from "./server-configuration-modal";
 import DeleteServerModal from "./delete-server-modal";
 import EmojisConfig from "./emojis-config";
@@ -21,7 +20,6 @@ const ChannelServerModal = ({
 }) => {
   const { self } = useSelf();
 
-  const [invite, setInvite] = useState<Invite | null>(null);
   const [createInviteModalVisible, setCreateInviteModalVisible] = useState<boolean>(false);
   const [configurationModalVisible, setConfigurationModalVisible] = useState<boolean>(false);
   const [deleteServerModalVisible, setDeleteServerModalVisible] = useState<boolean>(false);
@@ -29,16 +27,8 @@ const ChannelServerModal = ({
   const [membersConfigVisible, setMembersConfigVisible] = useState<boolean>(false);
   const [leaveModalVisible, setLeaveModalVisible] = useState<boolean>(false);
 
-  const generateInvite = async () => {
-    if (!server || !server.id) return;
-    const newInvite = await createInvite(server.id, "2020-12-09T16:09:53+00:00", 1);
-
-    setInvite(newInvite);
-  }
-
   const handleCreateInvite = async () => {
     setCreateInviteModalVisible(true);
-    generateInvite();
   }
 
   const isOwner = self?.id === server?.ownerId;
@@ -132,7 +122,6 @@ const ChannelServerModal = ({
       <CreateInviteModal
         visible={createInviteModalVisible}
         setVisible={setCreateInviteModalVisible}
-        invite={invite}
       />
 
       <ServerConfigurationModal

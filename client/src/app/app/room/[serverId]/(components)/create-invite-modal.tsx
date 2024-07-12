@@ -1,21 +1,25 @@
 "use client";
 
+import { createInvite } from "@/utils/api";
 import { Invite } from "@/utils/types";
 import { Copy, X } from "lucide-react";
+import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useRef, useState } from "react";
-import QRCode from "react-qr-code";
 
 const CreateInviteModal = ({
   visible,
   setVisible,
-  invite,
 }: {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
-  invite: Invite | null;
 }) => {
   const [copied, setCopied] = useState<boolean>(false);
   const inviteLinkRef = useRef<HTMLInputElement>(null);
+  const [uses, setUses] = useState<number>(20);
+  const [invite, setInvite] = useState<Invite | null>(null);
+  const [expiresIn, setExpiresIn] = useState<string>(new Date(new Date().getTime() + 1000 * 60 * 60 * 24).toISOString());
+  const { serverId } = useParams() as { serverId: string };
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const copyLink = () => {
     if (!invite?.id || !inviteLinkRef.current) return;
@@ -28,6 +32,13 @@ const CreateInviteModal = ({
     }, 1000);
   }
 
+  const generateInvite = async () => {
+    setIsLoading(true);
+    const newInvite = await createInvite(serverId, new Date(expiresIn).toISOString(), uses);
+
+    setInvite(newInvite);
+    setIsLoading(false);
+  }
 
   return (
     <div
@@ -48,35 +59,59 @@ const CreateInviteModal = ({
             Convide seus amigos
           </h1>
           <p className="text-white/50 text-sm">
-            Copie o link abaixo e envie para seus amigos!
+            Crie um link e divulgue com seus amigos ou sua comunidade!
           </p>
+          <div className="flex flex-col mt-4 gap-4">
+            <div className="flex flex-col">
+              <label className="text-xs text-white/80 font-bold">
+                NUMERO DE USOS
+              </label>
+              <input
+                type="number"
+                min={1}
+                max={1000000}
+                value={uses}
+                className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
+                onChange={(e) => setUses(Number(e.target.value))}
+              />
+            </div>
+            <div className="flex flex-col">
+              <label className="text-xs text-white/80 font-bold">
+                DATA DE EXPIRACAO
+              </label>
+              <input
+                type="date"
+                value={expiresIn}
+                className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
+                onChange={(e) => setExpiresIn(e.target.value)}
+              />
+            </div>
+            <button
+              className="w-full rounded-md hover:bg-[#4752c4] bg-[#5865f2] transition-colors text-center py-2"
+              onClick={generateInvite}
+              disabled={isLoading}
+            >
+              Gerar convite
+            </button>
+          </div>
           <div className="mt-4">
             <input
               className="bg-[#1e1f22] p-2 rounded-t-md w-full"
-              value={invite?.id ? `http://localhost:3000/invite/${invite.id}` : "Gerando convite..."}
+              value={invite?.id ? `http://localhost:3000/invite/${invite.id}` : isLoading ? "Gerando convite..." : "Gere um convite primeiro"}
               ref={inviteLinkRef}
               disabled
             />
             <button
               style={{ background: copied ? "#248046" : "#5865f2" }}
-              className="flex gap-2 w-full rounded-b-md hover:bg-[#4752c4] transition-colors items-center text-center justify-center py-2"
+              className="flex gap-2 w-full rounded-b-md hover:bg-[#4752c4] disabled:bg-[#4F5ACB] transition-colors items-center text-center justify-center py-2"
               onClick={copyLink}
+              disabled={!invite?.id}
             >
               <span>
                 {copied ? "Copiado" : "Copiar"}
               </span>
               <Copy className="h-4 w-4" />
             </button>
-          </div>
-          <p className="text-white/50 text-sm text-center mt-2">
-            Ou use o qr code abaixo
-          </p>
-          <div className="p-3 bg-[#1e1f22] rounded-md w-min mx-auto">
-            <QRCode
-              value={`http://localhost:3000/invite/${invite?.id}`}
-              className="rounded-md"
-              size={200}
-            />
           </div>
         </div>
       </div>
