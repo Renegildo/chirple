@@ -85,7 +85,6 @@ export const deleteInvite = async (req: IRequest, res: express.Response) => {
       return res.sendStatus(400);
     }
 
-    console.log("inviteId: ", inviteId);
     const deletedInvite = await deleteInviteDb(inviteId);
 
     return res.status(200).json(deletedInvite);
