@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Server } from '@/utils/types';
-import { editServer } from "@/utils/api";
+import { updateServer } from "@/utils/api";
 
 const ServerConfigurationModal = ({
   setVisible,
@@ -17,7 +17,7 @@ const ServerConfigurationModal = ({
   const handleEdit = async () => {
     if (!server || !server.id) return;
 
-    const updatedServer = await editServer(server.id, { name, imageUrl });
+    const updatedServer = await updateServer(server.id, { name, imageUrl });
     console.log("updatedServer: ", updatedServer);
     setVisible(false);
   }

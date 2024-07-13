@@ -24,6 +24,7 @@ export interface Server {
   description: string;
   imageUrl?: string;
   ownerId: string;
+  isPublic: boolean;
 
   members: ServerUser[];
   channels: Channel[];

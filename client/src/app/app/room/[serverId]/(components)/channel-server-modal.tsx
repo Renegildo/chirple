@@ -1,4 +1,4 @@
-import { Bolt, DoorOpen, Mails, SmilePlus, Trash, UserRoundPlus, Users } from "lucide-react";
+import { Bolt, DoorOpen, Eye, Mails, SmilePlus, Trash, UserRoundPlus, Users } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import CreateInviteModal from "./create-invite-modal";
 import { Server } from "@/utils/types";
@@ -9,6 +9,7 @@ import MembersConfig from "./members-config";
 import useSelf from "@/hooks/useSelf";
 import LeaveModal from "./leave-modal";
 import InvitesModal from "./invites-modal";
+import VisibilityModal from "./visibility-modal";
 
 const ChannelServerModal = ({
   visible,
@@ -28,6 +29,7 @@ const ChannelServerModal = ({
   const [membersConfigVisible, setMembersConfigVisible] = useState<boolean>(false);
   const [leaveModalVisible, setLeaveModalVisible] = useState<boolean>(false);
   const [inviteModalVisible, setInviteModalVisible] = useState<boolean>(false);
+  const [visibilityModalVisible, setVisibilityModalVisible] = useState<boolean>(false);
 
   const isOwner = self?.id === server?.ownerId;
 
@@ -118,6 +120,19 @@ const ChannelServerModal = ({
           {isOwner &&
             <button
               className="hover:bg-[#da373c] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
+              onClick={() => setVisibilityModalVisible(true)}
+            >
+              <span>
+                Visibilidade
+              </span>
+              <Eye
+                className="h-4 w-4"
+              />
+            </button>
+          }
+          {isOwner &&
+            <button
+              className="hover:bg-[#da373c] text-white/80 hover:text-white transition-colors w-full text-start rounded-md p-2 flex justify-between items-center"
               onClick={() => setDeleteServerModalVisible(true)}
             >
               <span>
@@ -170,6 +185,13 @@ const ChannelServerModal = ({
       <InvitesModal
         visible={inviteModalVisible}
         setVisible={setInviteModalVisible}
+      />
+
+      <VisibilityModal
+        isVisible={visibilityModalVisible}
+        setIsVisible={setVisibilityModalVisible}
+        serverId={server.id}
+        isPublic={server.isPublic}
       />
     </div>
   );

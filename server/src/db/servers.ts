@@ -109,3 +109,15 @@ export const getMemberByUserIdServerId = async (userId: string, serverId: string
 
   return member;
 }
+
+export const setServerIsPublic = async (id: string, isPublic: boolean) => {
+  const newServer = await db.server.update({
+    where: { id },
+    data: {
+      isPublic,
+    },
+  });
+
+  return newServer;
+}
+

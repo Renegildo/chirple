@@ -112,7 +112,7 @@ export const editMessage = async (id: string, data: any) => {
   return updatedMessage.data;
 }
 
-export const editServer = async (id: string, data: any) => {
+export const updateServer = async (id: string, data: any) => {
   const updatedServer = await api.put(
     "/server",
     { id, data },
