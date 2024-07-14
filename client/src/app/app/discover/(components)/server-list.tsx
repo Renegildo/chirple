@@ -19,7 +19,9 @@ const ServerList = () => {
   }, []);
 
   if (servers.length > 0) return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mx-auto gap-2">
+    <div className="grid
+      md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5
+      mx-auto gap-5 items-center justify-center">
       {servers.map(server => (
         <ServerCard key={server.id} server={server} />
       ))}

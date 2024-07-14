@@ -21,7 +21,6 @@ const ServerCard = ({
       const newMember = await joinPublicServer(server.id);
       router.push(`/app/room/${server.id}/${server.channels[0].id}`);
     } catch (error: any) {
-      console.log(error);
       if (error.response.status === 409) {
         router.push(`/app/room/${server.id}/${server.channels[0].id}`);
       }
@@ -35,7 +34,7 @@ const ServerCard = ({
       style={{
         backgroundColor: !isJoining ? "#232428" : "#3d3e44",
       }}
-      className="bg-[#232428] p-3 rounded-md w-72 shadow-xl shadow-black/20 hover:-translate-y-2 transition-transform hover:cursor-pointer"
+      className="bg-[#232428] p-3 rounded-md w-80 shadow-xl shadow-black/20 hover:-translate-y-2 transition-transform hover:cursor-pointer"
       onClick={handleClick}
     >
       <div className='flex items-center gap-2'>
@@ -50,7 +49,7 @@ const ServerCard = ({
           {server.name}
         </h2>
       </div>
-      <p>
+      <p className='text-start text-white/80'>
         {server.description}
       </p>
       <div className='flex gap-1 mt-5 text-white/50'>
