@@ -207,3 +207,15 @@ export const deleteInvite = async (inviteId: string) => {
 
   return deletedInvite.data;
 }
+
+export const getPublicServers = async () => {
+  const servers = await api.get("/publicServers");
+
+  return servers.data;
+}
+
+export const joinPublicServer = async (serverId: string) => {
+  const newMember = await api.post("/joinPublic", { serverId });
+
+  return newMember.data;
+}

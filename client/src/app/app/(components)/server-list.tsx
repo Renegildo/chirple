@@ -6,6 +6,7 @@ import ServerButton from "./server-button";
 import { Server } from '@/utils/types';
 import { useEffect, useState } from "react";
 import ServerButtonSkeleton from "./server-button-skeleton";
+import PublicServersButton from "./public-servers-button";
 
 const ServerList = () => {
   const { self, isLoading: isLoadingSelf } = useSelf();
@@ -31,7 +32,7 @@ const ServerList = () => {
   return (
     <>
       {!isLoadingSelf ? (
-        <ul className="flex gap-2 flex-col items-center">
+        <ul className="flex gap-2 flex-col items-center mb-3">
           {
             servers?.map(server => (
               <ServerButton
@@ -40,9 +41,12 @@ const ServerList = () => {
               />
             ))
           }
+
           <NewServerButton
             onCreateServer={handleCreateServer}
           />
+
+          <PublicServersButton />
         </ul>) : (
         <div className="flex flex-col gap-2 items-center">
           {

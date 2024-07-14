@@ -6,7 +6,9 @@ import {
   getMembers,
   deleteServer,
   banUser,
-  leaveServer
+  leaveServer,
+  getPublicServers,
+  joinPublicServer,
 } from '../controllers/servers';
 import { isAuthenticated } from '../middlewares';
 import express from 'express';
@@ -20,4 +22,6 @@ export default (router: express.Router) => {
   router.get("/members/:id", isAuthenticated, getMembers);
   router.delete("/server/:id", isAuthenticated, deleteServer);
   router.post("/ban", isAuthenticated, banUser);
+  router.get("/publicServers", isAuthenticated, getPublicServers);
+  router.post("/joinPublic", isAuthenticated, joinPublicServer);
 };

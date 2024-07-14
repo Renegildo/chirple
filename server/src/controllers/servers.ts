@@ -11,6 +11,7 @@ import {
   leaveServer as leaveServerDb,
   getMembersInServer,
   getMemberByUserIdServerId,
+  getPublicServers as getPublicServersDb
 } from '../db/servers';
 import { deleteInvite, getInviteById, useInvite } from '../db/invites';
 
@@ -89,6 +90,33 @@ export const joinServer = async (req: IRequest, res: express.Response) => {
     await useInvite(invite.id);
 
     return res.status(200).json(serverUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}
+
+export const joinPublicServer = async (req: IRequest, res: express.Response) => {
+  try {
+    const { serverId } = req.body;
+
+    if (!serverId) {
+      return res.sendStatus(400);
+    }
+
+    const server = await getServer(serverId);
+
+    if (!server.isPublic) {
+      return res.sendStatus(404);
+    }
+
+    const existingMember = await getMemberByUserIdServerId(req.user.id, serverId);
+    if (existingMember) {
+      return res.sendStatus(409);
+    }
+
+    const newMember = await enterServer(serverId, req.user.id);
+    return res.status(200).json(newMember);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
@@ -195,6 +223,17 @@ export const banUser = async (req: IRequest, res: express.Response) => {
     const bannedUser = await banUserDb(serverId, userId);
 
     return res.status(200).json(bannedUser);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+}
+
+export const getPublicServers = async (req: IRequest, res: express.Response) => {
+  try {
+    const publicServers = await getPublicServersDb();
+
+    return res.status(200).json(publicServers);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
