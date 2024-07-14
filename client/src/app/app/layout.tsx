@@ -9,7 +9,8 @@ const Layout = ({
 }) => {
   return (
     <div className="flex">
-      <aside className="px-3 py-3 h-screen bg-[#1e1f22] flex flex-col justify-between overflow-y-scroll scrollbar-hide">
+      <aside className="px-3 py-3 h-screen bg-[#1e1f22] flex flex-col justify-betwee
+        overflow-y-scroll scrollbar-hide min-w-[68px]">
         <ServerList />
         <UserProfileButton />
       </aside>
