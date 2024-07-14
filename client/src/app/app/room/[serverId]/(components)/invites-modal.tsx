@@ -19,9 +19,14 @@ const InvitesModal = ({
 
   useEffect(() => {
     const fetchInvites = async () => {
-      const newInvites = await getInvitesByServerId(serverId);
+      try {
+        const newInvites = await getInvitesByServerId(serverId);
 
-      setInvites(newInvites);
+        setInvites(newInvites);
+      } catch (error) {
+        console.log(error);
+      }
+
     }
 
     fetchInvites();
