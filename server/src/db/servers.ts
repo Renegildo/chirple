@@ -124,7 +124,8 @@ export const setServerIsPublic = async (id: string, isPublic: boolean) => {
 export const getPublicServers = async () => {
   const servers = await db.server.findMany({
     where: { isPublic: true },
-    include: { _count: { select: { members: true } }, channels: true }
+    include: { _count: { select: { members: true } }, channels: true },
+    orderBy: { members: { _count: "desc" } },
   });
 
   return servers;
