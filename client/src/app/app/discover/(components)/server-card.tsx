@@ -34,7 +34,8 @@ const ServerCard = ({
       style={{
         backgroundColor: !isJoining ? "#232428" : "#3d3e44",
       }}
-      className="bg-[#232428] p-3 rounded-md w-80 shadow-xl shadow-black/20 hover:-translate-y-2 transition-transform hover:cursor-pointer"
+      className="p-3 rounded-md w-80 shadow-xl shadow-black/20
+      hover:-translate-y-2 transition-transform hover:cursor-pointer"
       onClick={handleClick}
     >
       <div className='flex items-center gap-2'>
