@@ -29,7 +29,7 @@ const ServerList = () => {
     setServers(newServers)
   }, [self]);
 
-  if (isLoadingSelf) return (
+  if (!isLoadingSelf) return (
     <ul className="flex gap-2 flex-col items-center mb-3">
       {
         servers?.map(server => (
