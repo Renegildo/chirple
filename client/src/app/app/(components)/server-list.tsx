@@ -29,36 +29,35 @@ const ServerList = () => {
     setServers(newServers)
   }, [self]);
 
-  return (
-    <>
-      {!isLoadingSelf ? (
-        <ul className="flex gap-2 flex-col items-center mb-3">
-          {
-            servers?.map(server => (
-              <ServerButton
-                key={server.id}
-                server={server}
-              />
-            ))
-          }
-
-          <NewServerButton
-            onCreateServer={handleCreateServer}
+  if (isLoadingSelf) return (
+    <ul className="flex gap-2 flex-col items-center mb-3">
+      {
+        servers?.map(server => (
+          <ServerButton
+            key={server.id}
+            server={server}
           />
+        ))
+      }
 
-          <PublicServersButton />
-        </ul>) : (
-        <div className="flex flex-col gap-2 items-center">
-          {
-            [...new Array(5)].map((_, i) => (
-              <ServerButtonSkeleton
-                key={i}
-              />
-            ))
-          }
-        </div>
-      )}
-    </>
+      <NewServerButton
+        onCreateServer={handleCreateServer}
+      />
+
+      <PublicServersButton />
+    </ul>
+  );
+
+  return (
+    <div className="flex flex-col gap-2 items-center">
+      {
+        [...new Array(5)].map((_, i) => (
+          <ServerButtonSkeleton
+            key={i}
+          />
+        ))
+      }
+    </div>
   );
 }
 
