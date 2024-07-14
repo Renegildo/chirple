@@ -4,7 +4,7 @@ import useSelf from "@/hooks/useSelf";
 import { socket } from "@/socket";
 import { sendMessage } from "@/utils/api";
 import { User, Emoji } from "@/utils/types";
-import { Plus, Smile, X } from "lucide-react";
+import { Plus, SendHorizontal, Smile, X } from "lucide-react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import UploadImageModal from "./upload-image-modal";
@@ -144,6 +144,12 @@ const MessageInput = () => {
                 onClick={() => setEmojisModalVisible(true)}
               >
                 <Smile />
+              </button>
+              <button
+                className="mr-3"
+                onClick={handleSendMessage}
+              >
+                <SendHorizontal />
               </button>
               <EmojisModal
                 visible={emojisModalVisible}
