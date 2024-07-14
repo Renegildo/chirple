@@ -13,11 +13,12 @@ const ServerConfigurationModal = ({
 }) => {
   const [name, setName] = useState<string>(server?.name || "");
   const [imageUrl, setImageUrl] = useState<string>(server?.imageUrl || "");
+  const [description, setDescription] = useState<string>(server?.description || "");
 
   const handleEdit = async () => {
     if (!server || !server.id) return;
 
-    const updatedServer = await updateServer(server.id, { name, imageUrl });
+    const updatedServer = await updateServer(server.id, { name, imageUrl, description });
     console.log("updatedServer: ", updatedServer);
     setVisible(false);
   }
@@ -43,7 +44,7 @@ const ServerConfigurationModal = ({
               </label>
               <input
                 className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
-                defaultValue={server.name}
+                value={name}
                 placeholder="Nome do servidor"
                 onChange={(e) => setName(e.target.value)}
               />
@@ -55,11 +56,23 @@ const ServerConfigurationModal = ({
               </label>
               <input
                 className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
-                defaultValue={server.imageUrl}
+                value={imageUrl}
                 placeholder="https://imagens.com/exemplo"
                 onChange={(e) => setImageUrl(e.target.value)}
               />
             </div>
+
+            {server.isPublic && <div>
+              <label className="text-xs text-white/80 font-bold">
+                DESCRICAO
+              </label>
+              <input
+                className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
+                value={description}
+                placeholder="Faca uma breve descricao"
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>}
           </div>
         </div>
 

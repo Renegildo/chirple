@@ -49,7 +49,7 @@ const ServerCard = ({
           {server.name}
         </h2>
       </div>
-      <p className='text-start text-white/80'>
+      <p className='text-start text-white/80 mt-2'>
         {server.description}
       </p>
       <div className='flex gap-1 mt-5 text-white/50'>
