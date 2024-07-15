@@ -86,7 +86,7 @@ const RegisterPage = () => {
           </label>
           <input
             required
-            placeholder="seuEmail@exemplo.com"
+            placeholder="Seu melhor email"
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
             style={{

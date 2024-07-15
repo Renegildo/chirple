@@ -64,7 +64,7 @@ const LoginPage = () => {
           </label>
           <input
             required
-            placeholder="renegildo@proton.me"
+            placeholder="Seu email"
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
             style={{
@@ -81,7 +81,8 @@ const LoginPage = () => {
           </label>
           <input
             required
-            placeholder="password"
+            placeholder="Sua senha"
+            type="password"
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
             className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
             style={{
