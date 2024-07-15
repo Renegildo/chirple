@@ -155,6 +155,6 @@ io.on("connection", (socket: ISocket) => {
 app.use("/", router());
 
 server.listen(httpPort, () => {
-  console.log(`HTTP server running on http://localhost:${httpPort}`)
+  console.log(`HTTP server running on port: ${httpPort}`);
 });
 
