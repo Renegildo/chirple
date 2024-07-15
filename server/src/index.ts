@@ -13,7 +13,7 @@ import { getMessageById } from './db/messages';
 
 dotenv.config();
 
-const httpPort: number = process.env.PORT ? Number(process.env.HTTPPORT) : 8080;
+const httpPort: number = process.env.HTTPPORT ? Number(process.env.HTTPPORT) : 8080;
 const ioPort: number = process.env.IOPORT ? Number(process.env.IOPORT) : 8081;
 const clientUrl = "*";
 
