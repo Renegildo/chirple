@@ -13,12 +13,14 @@ import { getMessageById } from './db/messages';
 
 dotenv.config();
 
-const httpPort = 8080;
-const ioPort = 8081;
+const httpPort: number = process.env.HTTPPORT ? Number(process.env.HTTPPORT) : 8080;
+const ioPort: number = process.env.IOPORT ? Number(process.env.IOPORT) : 8081;
+const clientUrl = "*";
+
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: clientUrl,
   credentials: true,
 }));
 app.use(cookieParser());
@@ -28,7 +30,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: clientUrl,
     credentials: true,
   },
   cookie: {
