@@ -154,6 +154,10 @@ io.on("connection", (socket: ISocket) => {
 
 app.use("/", router());
 
+app.get("/", (req, res) => {
+  res.json({ msg: "Hello, World!" });
+});
+
 server.listen(httpPort, () => {
   console.log(`HTTP server running on port: ${httpPort}`);
 });
