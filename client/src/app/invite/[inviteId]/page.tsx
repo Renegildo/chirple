@@ -6,7 +6,7 @@ import { Invite } from "@/utils/types";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const invitePage = () => {
+const InvitePage = () => {
   const [invite, setInvite] = useState<Invite | null>(null);
   const { inviteId } = useParams() as { inviteId: string };
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -64,4 +64,4 @@ const invitePage = () => {
   );
 }
 
-export default invitePage;
+export default InvitePage;
