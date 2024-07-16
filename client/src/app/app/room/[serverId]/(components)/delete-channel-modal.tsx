@@ -30,7 +30,7 @@ const DeleteChannelModal = ({
             Deletar {channel.name}
           </h1>
           <p className="text-sm text-white/50">
-            Voce tem certeza que deseja deletar o canal "{channel.name}"?
+            Voce tem certeza que deseja deletar o canal &quot;{channel.name}&quot;?
           </p>
         </div>
 
