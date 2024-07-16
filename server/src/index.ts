@@ -13,9 +13,8 @@ import { getMessageById } from './db/messages';
 
 dotenv.config();
 
-const httpPort: number = process.env.HTTPPORT ? Number(process.env.HTTPPORT) : 8080;
-const ioPort: number = process.env.IOPORT ? Number(process.env.IOPORT) : 8081;
-const clientUrl = "*";
+const PORT: number = process.env.PORT ? Number(process.env.PORT) : 8080;
+const clientUrl = "http://192.168.100.123:3000";
 
 const app = express();
 
@@ -42,8 +41,6 @@ const io = new Server(server, {
     secure: true,
   },
 });
-
-io.listen(ioPort);
 
 io.use(async (socket: ISocket, next) => {
   try {
@@ -158,7 +155,7 @@ app.get("/", (req, res) => {
   res.json({ msg: "Hello, World!" });
 });
 
-server.listen(httpPort, () => {
-  console.log(`HTTP server running on port: ${httpPort}`);
+server.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT}`);
 });
 

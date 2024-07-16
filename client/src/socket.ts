@@ -1,8 +1,9 @@
 "use client";
 
 import { io } from "socket.io-client";
+import { baseServerUrl } from "./utils/constants";
 
-export const socket = io("http://192.168.100.123:8081", {
+export const socket = io(baseServerUrl, {
   withCredentials: true,
   auth: {
     token: localStorage.getItem("token"),
