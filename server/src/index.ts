@@ -14,7 +14,7 @@ import { getMessageById } from './db/messages';
 dotenv.config();
 
 const PORT: number = process.env.PORT ? Number(process.env.PORT) : 8080;
-const clientUrl = "*";
+const clientUrl = "http://192.168.100.123:3000";
 
 const app = express();
 
