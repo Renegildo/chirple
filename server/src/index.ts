@@ -155,7 +155,4 @@ app.get("/", (req, res) => {
   res.json({ msg: "Hello, World!" });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
-});
-
+module.exports = app;
