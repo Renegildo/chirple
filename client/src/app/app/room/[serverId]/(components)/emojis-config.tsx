@@ -62,7 +62,7 @@ const EmojisConfig = ({
             </thead>
             {
               emojis.length > 0 ? emojis?.map((emoji, i) => (
-                <tbody>
+                <tbody key={i}>
                   <tr key={i} className="hover:bg-white/10 items-center transition-colors duration-75 last:rounded-b-md">
                     <th scope="row" className="p-2">
                       <Image
