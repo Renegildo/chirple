@@ -40,7 +40,7 @@ const io = new Server(httpServer, {
   },
   cookie: {
     name: "token",
-    domain: ".localhost",
+    domain: "chirple.vercel.app",
     sameSite: "strict",
     path: "/",
     httpOnly: true,
