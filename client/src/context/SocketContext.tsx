@@ -5,7 +5,7 @@ import { SetStateAction, createContext, Dispatch, useState, ReactNode } from "re
 
 type SocketContextType = {
   socket: Socket | null;
-  setSocket: Dispatch<SetStateAction<Socket>>;
+  setSocket: Dispatch<SetStateAction<Socket | null>>;
 }
 
 export const SocketContext = createContext<SocketContextType>({
