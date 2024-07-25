@@ -1,1 +1,1 @@
-export const baseServerUrl = "http://192.168.100.123:8080"
+export const baseServerUrl = "https://chirple-api.onrender.com"
