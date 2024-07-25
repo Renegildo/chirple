@@ -1,6 +1,6 @@
 "use client";
 
-import { socket } from "@/socket";
+import { useSocket } from "@/socket";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import MessageComponent from "./message";
@@ -28,6 +28,46 @@ const MessageList = ({
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(true);
   const router = useRouter();
   const { self, selfRef } = useSelf();
+  const socket = useSocket();
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.emit("joinRoom", { serverId });
+
+    socket.on("message", (message) => {
+      if (message.channelId !== channelId) return;
+      setMessages(prevMessages => [...prevMessages, message]);
+    });
+
+    socket.on("deleteMessage", ({ messageId }) => {
+      console.log("alguem deletou uma mensagem aqui kkkkkkk", messageId);
+      setMessages(prevMessages => prevMessages.filter(message => message.id !== messageId));
+    });
+
+    socket.on("editMessage", ({ messageId, newMessage }) => {
+      setMessages(prevMessages =>
+        prevMessages.map(message => (
+          message.id === messageId ? { ...message, message: newMessage, isEdited: true } : message
+        ))
+      );
+    });
+
+    socket.on("banUser", ({ userId }) => {
+      if (!selfRef.current) return;
+
+      if (userId === selfRef.current.id) {
+        router.push("/app");
+        socket.close();
+      }
+    });
+
+    return () => {
+      socket.off("message");
+      socket.off("deleteMessage");
+      socket.off("editMessage");
+      socket.off("banUser");
+    }
+  }, [socket]);
 
   useEffect(() => {
     const getOldMessages = async () => {
@@ -49,43 +89,9 @@ const MessageList = ({
       setEmojis(newEmojis);
     }
 
-    socket.emit("joinRoom", { serverId });
-
-    socket.on("message", (message) => {
-      if (message.channelId !== channelId) return;
-      setMessages(prevMessages => [...prevMessages, message]);
-    });
-
-    socket.on("deleteMessage", ({ messageId }) => {
-      setMessages(prevMessages => prevMessages.filter(message => message.id !== messageId));
-    });
-
-    socket.on("editMessage", ({ messageId, newMessage }) => {
-      setMessages(prevMessages =>
-        prevMessages.map(message => (
-          message.id === messageId ? { ...message, message: newMessage, isEdited: true } : message
-        ))
-      );
-    });
-
-    socket.on("banUser", ({ userId }) => {
-      if (!selfRef.current) return;
-
-      if (userId === selfRef.current.id) {
-        router.push("/app");
-        socket.close();
-      }
-    });
-
     getOldMessages();
     getChannelName();
     getEmojis();
-
-    return () => {
-      socket.off("message");
-      socket.off("deleteMessage");
-      socket.off("banUser");
-    }
   }, [channelId, serverId]);
 
   useEffect(() => {
@@ -138,6 +144,8 @@ const MessageList = ({
                   !compareTimestamps(messages?.[i - 1]?.createdAt, message.createdAt)
                 }
                 emojis={emojis}
+                self={self}
+                serverId={serverId}
               />
             ))}
           </div>

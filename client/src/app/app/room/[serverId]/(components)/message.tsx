@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
-import { Message, Emoji } from "@/utils/types";
+import { Message, Emoji, User } from "@/utils/types";
 import { formatDateString } from '@/utils/utils';
 import { deleteMessage, editMessage } from '@/utils/api';
 import MessageActions from './message-actions';
-import { socket } from '@/socket';
+import { useSocket } from '@/socket';
 import { useState } from 'react';
 import UserCard from './user-card';
 import { Check } from 'lucide-react';
-import useSelf from '@/hooks/useSelf';
 import UserPicture from '@/app/app/(components)/user-picture';
 
 const MessageComponent = ({
   message,
   showUser,
   emojis,
-  channelId
+  channelId,
+  self,
+  serverId,
 }: {
   message: Message;
   showUser: boolean;
   emojis: Emoji[];
   channelId: string;
+  self: User | null;
+  serverId: string;
 }) => {
-  const { self } = useSelf();
+  const socket = useSocket();
 
   const [showDeleteModal, setDeleteModal] = useState<boolean>(false);
   const [userCardOpen, setUserCardOpen] = useState<boolean>(false);
@@ -30,15 +33,23 @@ const MessageComponent = ({
   const [editedMessage, setEditedMessage] = useState<string>(message.message);
 
   const handleDelete = async () => {
+    if (!socket) return;
+
+    socket.emit("joinRoom", { serverId });
     const removedMessage = await deleteMessage(message.id);
 
     socket.emit("deleteMessage", {
       messageId: message.id,
       channelId
     });
+
+    setDeleteModal(false);
   }
 
   const handleEdit = async () => {
+    if (!socket) return;
+
+    socket.emit("joinRoom", { serverId });
     const updatedMessage = await editMessage(message.id, { message: editedMessage });
 
     socket.emit("editMessage", {
@@ -77,6 +88,11 @@ const MessageComponent = ({
       </>
     );
   }
+
+  useEffect(() => {
+    if (!socket) return;
+
+  }, [socket]);
 
   return (
     <div className='relative'>

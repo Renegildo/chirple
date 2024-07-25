@@ -1,7 +1,7 @@
 "use client";
 
 import useSelf from "@/hooks/useSelf";
-import { socket } from "@/socket";
+import { useSocket } from "@/socket";
 import { sendMessage } from "@/utils/api";
 import { User, Emoji } from "@/utils/types";
 import { Plus, SendHorizontal, Smile, X } from "lucide-react";
@@ -21,8 +21,13 @@ const MessageInput = () => {
   const [uploadImageModal, setUploadImageModal] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [emojisModalVisible, setEmojisModalVisible] = useState<boolean>(false);
+  const socket = useSocket();
 
   useEffect(() => {
+    if (!socket) return;
+
+    socket.emit("joinRoom", { serverId });
+
     socket.on("startTyping", ({ user, channelId: typingChannelId }) => {
       if (typingChannelId !== channelId) return;
 
@@ -37,7 +42,7 @@ const MessageInput = () => {
       socket.off("startTyping");
       socket.off("stopTyping");
     }
-  }, []);
+  }, [socket]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -46,7 +51,7 @@ const MessageInput = () => {
   }
 
   const handleSendMessage = async () => {
-    if (isLoading || !self || isSendingMessage || message.length === 0 && imageUrl.length === 0) return;
+    if (isLoading || !self || isSendingMessage || message.length === 0 && imageUrl.length === 0 || !socket) return;
     setIsSendingMessage(true);
 
     const newMessage = await sendMessage(message, channelId, imageUrl);
@@ -60,7 +65,7 @@ const MessageInput = () => {
         owner: self,
         ownerId: self.id,
         channelId,
-      }
+      },
     );
 
     setMessage("");
@@ -70,7 +75,7 @@ const MessageInput = () => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
-    if (typing) return;
+    if (typing || !socket) return;
 
     socket.emit("startTyping", { channelId });
 

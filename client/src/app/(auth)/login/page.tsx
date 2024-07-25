@@ -42,7 +42,7 @@ const LoginPage = () => {
         return router.push("/app");
       }
     } catch (error: any) {
-      const newErrorCode = error.response.data.errorCode;
+      const newErrorCode = error?.response?.data?.errorCode;
       if (newErrorCode) setErrorCode(newErrorCode);
     }
   }

@@ -25,9 +25,15 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json());
 
-const server = http.createServer(app);
+app.use("/", router());
 
-const io = new Server(server, {
+app.get("/", (req, res) => {
+  res.json({ msg: "Hello, World!" });
+});
+
+const httpServer = http.createServer(app);
+
+const io = new Server(httpServer, {
   cors: {
     origin: clientUrl,
     credentials: true,
@@ -40,6 +46,10 @@ const io = new Server(server, {
     httpOnly: true,
     secure: true,
   },
+});
+
+httpServer.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT}`);
 });
 
 io.use(async (socket: ISocket, next) => {
@@ -61,6 +71,7 @@ io.use(async (socket: ISocket, next) => {
 
 io.on("connection", (socket: ISocket) => {
   socket.on("joinRoom", async ({ serverId }) => {
+    console.log("joining server: ", serverId);
     if (!serverId) return;
 
     const server = await getServerById(serverId);
@@ -80,6 +91,8 @@ io.on("connection", (socket: ISocket) => {
   });
 
   socket.on("sendMessage", ({ id, message, owner, imageUrl, channelId, ownerId }) => {
+    console.log("aqui no sendMessage", { id, message, owner, imageUrl, channelId, ownerId, serverId: socket.serverId });
+
     if (!id || !socket.serverId || !channelId || !owner || !ownerId || (!message && !imageUrl)) return;
 
     io.to(socket.serverId).emit("message", {
@@ -148,14 +161,3 @@ io.on("connection", (socket: ISocket) => {
     });
   });
 });
-
-app.use("/", router());
-
-app.get("/", (req, res) => {
-  res.json({ msg: "Hello, World!" });
-});
-
-server.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
-});
-
