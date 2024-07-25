@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Image from 'next/image';
 import { Message, Emoji, User } from "@/utils/types";
 import { formatDateString } from '@/utils/utils';
@@ -9,6 +9,7 @@ import { useState } from 'react';
 import UserCard from './user-card';
 import { Check } from 'lucide-react';
 import UserPicture from '@/app/app/(components)/user-picture';
+import { SocketContext } from '@/context/SocketContext';
 
 const MessageComponent = ({
   message,
@@ -25,7 +26,7 @@ const MessageComponent = ({
   self: User | null;
   serverId: string;
 }) => {
-  const socket = useSocket();
+  const { socket } = useContext(SocketContext);
 
   const [showDeleteModal, setDeleteModal] = useState<boolean>(false);
   const [userCardOpen, setUserCardOpen] = useState<boolean>(false);
@@ -49,7 +50,6 @@ const MessageComponent = ({
   const handleEdit = async () => {
     if (!socket) return;
 
-    socket.emit("joinRoom", { serverId });
     const updatedMessage = await editMessage(message.id, { message: editedMessage });
 
     socket.emit("editMessage", {

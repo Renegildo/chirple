@@ -1,9 +1,9 @@
 import { ServerUser } from "@/utils/types";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { Ban } from "lucide-react";
 import { banUser } from "@/utils/api";
-import { useSocket } from "@/socket";
 import UserPicture from "@/app/app/(components)/user-picture";
+import { SocketContext } from "@/context/SocketContext";
 
 const MembersConfig = ({
   visible,
@@ -18,7 +18,7 @@ const MembersConfig = ({
 }) => {
   const [members, setMembers] = useState<ServerUser[]>(initialMembers);
   const [isBanningUserId, setIsBanningUserId] = useState<string | null>(null);
-  const socket = useSocket();
+  const { socket } = useContext(SocketContext);
 
   const handleBan = async (userId: string) => {
     if (!socket) return;
@@ -30,12 +30,6 @@ const MembersConfig = ({
     setMembers(prevMembers => prevMembers.filter(member => member.userId !== bannedUser.userId));
     setIsBanningUserId(null);
   }
-
-  useEffect(() => {
-    if (!socket) return;
-
-    socket.emit("joinRoom", { serverId });
-  }, [socket]);
 
   if (visible) return (
     <>

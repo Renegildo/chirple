@@ -6,10 +6,11 @@ import { sendMessage } from "@/utils/api";
 import { User, Emoji } from "@/utils/types";
 import { Plus, SendHorizontal, Smile, X } from "lucide-react";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UploadImageModal from "./upload-image-modal";
 import Image from 'next/image';
 import EmojisModal from "./emojis-modal";
+import { SocketContext } from "@/context/SocketContext";
 
 const MessageInput = () => {
   const [isSendingMessage, setIsSendingMessage] = useState<boolean>(false);
@@ -21,12 +22,10 @@ const MessageInput = () => {
   const [uploadImageModal, setUploadImageModal] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
   const [emojisModalVisible, setEmojisModalVisible] = useState<boolean>(false);
-  const socket = useSocket();
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     if (!socket) return;
-
-    socket.emit("joinRoom", { serverId });
 
     socket.on("startTyping", ({ user, channelId: typingChannelId }) => {
       if (typingChannelId !== channelId) return;

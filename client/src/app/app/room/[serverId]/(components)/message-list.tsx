@@ -2,7 +2,7 @@
 
 import { useSocket } from "@/socket";
 import { useParams } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
 import MessageComponent from "./message";
 import { getChannelNameById, getEmojisByServerId, getMessagesByChannelId } from "@/utils/api";
 import { Message, Emoji } from "@/utils/types";
@@ -12,6 +12,7 @@ import MessageListSkeleton from "./message-list-skeleton";
 import Skeleton from "@/app/app/(components)/skeleton";
 import useSelf from "@/hooks/useSelf";
 import { useRouter } from "next/navigation";
+import { SocketContext } from "@/context/SocketContext";
 
 const MessageList = ({
   setMembersListOpen,
@@ -28,7 +29,7 @@ const MessageList = ({
   const [isLoadingMessages, setIsLoadingMessages] = useState<boolean>(true);
   const router = useRouter();
   const { self, selfRef } = useSelf();
-  const socket = useSocket();
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
     if (!socket) return;

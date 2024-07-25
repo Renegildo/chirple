@@ -2,11 +2,14 @@
 
 import { useParams } from "next/navigation";
 import { getServerById } from "@/utils/api";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { Server, Channel } from '@/utils/types';
 import ChannelList from "./(components)/channel-list";
 import ChannelServerButton from "./(components)/channel-server-button";
 import { useRouter } from "next/navigation";
+import { SocketContext } from "@/context/SocketContext";
+import { io } from "socket.io-client";
+import { baseServerUrl } from "@/utils/constants";
 
 const Room = ({
   children
@@ -15,6 +18,7 @@ const Room = ({
 }) => {
   const [server, setServer] = useState<Server | null>(null);
   const { serverId } = useParams() as { serverId: string };
+  const { socket, setSocket } = useContext(SocketContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +26,13 @@ const Room = ({
       try {
         const newServer = await getServerById(serverId);
 
+        const token = localStorage.getItem("token");
+        const newSocket = io(baseServerUrl, {
+          withCredentials: true,
+          auth: { token },
+        });
+
+        setSocket(newSocket);
         setServer(newServer);
       } catch (error) {
         router.push("/app");
@@ -29,7 +40,13 @@ const Room = ({
     }
 
     fetchServer();
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.emit("joinRoom", { serverId });
+  }, [socket]);
 
   const handleCreateChannel = (newChannel: Channel) => {
     setServer(prevServer => {
