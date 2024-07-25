@@ -38,14 +38,6 @@ const io = new Server(httpServer, {
     origin: clientUrl,
     credentials: true,
   },
-  cookie: {
-    name: "token",
-    domain: "chirple.vercel.app",
-    sameSite: "strict",
-    path: "/",
-    httpOnly: true,
-    secure: true,
-  },
 });
 
 httpServer.listen(PORT, () => {
