@@ -6,7 +6,8 @@
     "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true
+    "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0"
   },
   "include": [
     "src/**/*"
