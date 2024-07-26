@@ -65,7 +65,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     return res.status(200).cookie("token", token, {
       path: "/",
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "lax",
       secure: process.env.NODE_ENV === 'production',
     }).json({ ...user, token });
   } catch (error) {
