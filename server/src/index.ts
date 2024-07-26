@@ -14,7 +14,7 @@ import { getMessageById } from './db/messages';
 dotenv.config();
 
 const PORT: number = process.env.PORT ? Number(process.env.PORT) : 8080;
-const clientUrl = "https://chirple.vercel.app";
+const clientUrl = process.env.NODE_ENV === "production" ? "https://chirple.vercel.app" : "http://192.168.100.123:3000";
 
 const app = express();
 
