@@ -7,7 +7,7 @@ import {
   updateMessage
 } from '../db/messages';
 import express from 'express';
-import { IRequest } from "types";
+import { IRequest } from "../types";
 
 export const sendMessage = async (req: IRequest, res: express.Response) => {
   try {

@@ -2,7 +2,7 @@ import { compare } from 'bcrypt';
 import { createUser, getUserByEmail, getUserByUsername } from '../db/users';
 import express from 'express';
 import { sign } from 'jsonwebtoken';
-import { IRequest } from 'types';
+import { IRequest } from '../types';
 
 const maxUsernameLength = 20;
 const minUsernameLength = 2;

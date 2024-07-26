@@ -1,5 +1,5 @@
 import express from 'express';
-import { IRequest } from 'types';
+import { IRequest } from '../types';
 import {
   updateUser as updateUserDb,
   deleteUser as deleteUserDb

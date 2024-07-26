@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { IRequest } from 'types';
+import { IRequest } from '../types';
 import {
   createServer as newServer,
   getServerById as getServer,

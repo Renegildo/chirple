@@ -1,4 +1,4 @@
-import { IRequest } from 'types';
+import { IRequest } from '../types';
 import express from 'express';
 import {
   createInvite as newInvite,
