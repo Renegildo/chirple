@@ -12,5 +12,6 @@ export interface IRequest extends express.Request {
   user: User;
   body: any;
   params: any;
+  cookies: any;
 }
 
