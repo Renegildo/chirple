@@ -1,15 +1,18 @@
-import express from 'express';
-import { IRequest } from '../types';
+import express from "express";
+import { IRequest } from "../types";
 import {
   getEmojisByServerId as getEmojiByServerIdDb,
   createEmoji as createEmojiDb,
   deleteEmoji as deleteEmojiDb,
-  getEmojiById
-} from '../db/emojis';
-import { getUserById } from '../db/users';
-import { getServerById } from '../db/servers';
+  getEmojiById,
+} from "../db/emojis";
+import { getUserById } from "../db/users";
+import { getServerById } from "../db/servers";
 
-export const getEmojisByServerId = async (req: IRequest, res: express.Response) => {
+export const getEmojisByServerId = async (
+  req: IRequest,
+  res: express.Response,
+) => {
   try {
     const { serverId } = req.params;
 
@@ -38,7 +41,7 @@ export const getEmojisByServerId = async (req: IRequest, res: express.Response) 
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const createEmoji = async (req: IRequest, res: express.Response) => {
   try {
@@ -61,7 +64,7 @@ export const createEmoji = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const deleteEmoji = async (req: IRequest, res: express.Response) => {
   try {
@@ -85,4 +88,4 @@ export const deleteEmoji = async (req: IRequest, res: express.Response) => {
 
     return res.sendStatus(400);
   }
-}
+};

@@ -1,12 +1,12 @@
-import { IRequest } from '../types';
-import express from 'express';
+import { IRequest } from "../types";
+import express from "express";
 import {
   createInvite as newInvite,
   getInviteById as getInvite,
   getInvitesByServerId as getInvitesByServerIdDb,
   deleteInvite as deleteInviteDb,
-} from '../db/invites';
-import { getServerById } from '../db/servers';
+} from "../db/invites";
+import { getServerById } from "../db/servers";
 
 export const createInvite = async (req: IRequest, res: express.Response) => {
   try {
@@ -35,7 +35,7 @@ export const createInvite = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const getInviteById = async (req: IRequest, res: express.Response) => {
   try {
@@ -52,9 +52,12 @@ export const getInviteById = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
-export const getInvitesByServerId = async (req: IRequest, res: express.Response) => {
+export const getInvitesByServerId = async (
+  req: IRequest,
+  res: express.Response,
+) => {
   try {
     const { serverId } = req.params;
 
@@ -75,7 +78,7 @@ export const getInvitesByServerId = async (req: IRequest, res: express.Response)
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const deleteInvite = async (req: IRequest, res: express.Response) => {
   try {
@@ -92,5 +95,4 @@ export const deleteInvite = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
-
+};

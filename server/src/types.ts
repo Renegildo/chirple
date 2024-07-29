@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import express from 'express';
+import express from "express";
 import { User } from "@prisma/client";
 
 export interface ISocket extends Socket {
@@ -14,4 +14,3 @@ export interface IRequest extends express.Request {
   params: any;
   cookies: any;
 }
-

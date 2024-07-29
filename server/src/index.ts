@@ -1,27 +1,32 @@
-import express from 'express';
-import http from 'http';
-import { Server } from 'socket.io';
-import { ISocket } from 'types';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import router from './router';
-import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
-import { getUserById } from './db/users';
-import { getServerById } from './db/servers';
-import { getMessageById } from './db/messages';
+import express from "express";
+import http from "http";
+import { Server } from "socket.io";
+import { ISocket } from "types";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import router from "./router";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+import { getUserById } from "./db/users";
+import { getServerById } from "./db/servers";
+import { getMessageById } from "./db/messages";
 
 dotenv.config();
 
 const PORT: number = process.env.PORT ? Number(process.env.PORT) : 8080;
-const clientUrl = process.env.NODE_ENV === "production" ? "https://chirple.vercel.app" : "http://192.168.100.123:3000";
+const clientUrl =
+  process.env.NODE_ENV === "production"
+    ? "https://chirple.vercel.app"
+    : "http://192.168.100.123:3000";
 
 const app = express();
 
-app.use(cors({
-  origin: clientUrl,
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: clientUrl,
+    credentials: true,
+  }),
+);
 app.use(cookieParser());
 app.use(express.json());
 
@@ -47,7 +52,9 @@ httpServer.listen(PORT, () => {
 io.use(async (socket: ISocket, next) => {
   try {
     const token = socket.handshake.auth.token;
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as { userId: string };
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as {
+      userId: string;
+    };
 
     socket.userId = userId;
 
@@ -82,21 +89,40 @@ io.on("connection", (socket: ISocket) => {
     socket.serverId = serverId;
   });
 
-  socket.on("sendMessage", ({ id, message, owner, imageUrl, channelId, ownerId }) => {
-    console.log("aqui no sendMessage", { id, message, owner, imageUrl, channelId, ownerId, serverId: socket.serverId });
+  socket.on(
+    "sendMessage",
+    ({ id, message, owner, imageUrl, channelId, ownerId }) => {
+      console.log("aqui no sendMessage", {
+        id,
+        message,
+        owner,
+        imageUrl,
+        channelId,
+        ownerId,
+        serverId: socket.serverId,
+      });
 
-    if (!id || !socket.serverId || !channelId || !owner || !ownerId || (!message && !imageUrl)) return;
+      if (
+        !id ||
+        !socket.serverId ||
+        !channelId ||
+        !owner ||
+        !ownerId ||
+        (!message && !imageUrl)
+      )
+        return;
 
-    io.to(socket.serverId).emit("message", {
-      id,
-      owner,
-      ownerId,
-      message,
-      imageUrl,
-      channelId,
-      createdAt: new Date(),
-    });
-  });
+      io.to(socket.serverId).emit("message", {
+        id,
+        owner,
+        ownerId,
+        message,
+        imageUrl,
+        channelId,
+        createdAt: new Date(),
+      });
+    },
+  );
 
   socket.on("startTyping", ({ channelId }) => {
     if (!socket.serverId || !channelId) return;

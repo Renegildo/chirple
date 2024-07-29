@@ -1,4 +1,4 @@
-import db from "./prismaClient"
+import db from "./prismaClient";
 
 export const getEmojisByServerId = async (serverId: string) => {
   const emojis = await db.emoji.findMany({
@@ -6,15 +6,19 @@ export const getEmojisByServerId = async (serverId: string) => {
   });
 
   return emojis;
-}
+};
 
-export const createEmoji = async (code: string, imageUrl: string, serverId: string) => {
+export const createEmoji = async (
+  code: string,
+  imageUrl: string,
+  serverId: string,
+) => {
   const newEmoji = await db.emoji.create({
     data: { code, imageUrl, serverId },
   });
 
   return newEmoji;
-}
+};
 
 export const deleteEmoji = async (id: string) => {
   const deletedEmoji = await db.emoji.delete({
@@ -22,7 +26,7 @@ export const deleteEmoji = async (id: string) => {
   });
 
   return deletedEmoji;
-}
+};
 
 export const getEmojiById = async (id: string) => {
   const emoji = await db.emoji.findUnique({
@@ -31,4 +35,4 @@ export const getEmojiById = async (id: string) => {
   });
 
   return emoji;
-}
+};

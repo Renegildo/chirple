@@ -10,7 +10,7 @@ export const createChannel = async (name: string, serverId: string) => {
   });
 
   return newChannel;
-}
+};
 
 export const updateChannel = async (id: string, data: any) => {
   const updatedChannel = await db.channel.update({
@@ -19,7 +19,7 @@ export const updateChannel = async (id: string, data: any) => {
   });
 
   return updatedChannel;
-}
+};
 
 export const deleteChannel = async (id: string) => {
   const deletedChannel = db.channel.delete({
@@ -27,7 +27,7 @@ export const deleteChannel = async (id: string) => {
   });
 
   return deletedChannel;
-}
+};
 
 export const getChannelNameById = async (id: string) => {
   const channel = await db.channel.findUnique({
@@ -38,7 +38,7 @@ export const getChannelNameById = async (id: string) => {
   });
 
   return channel.name;
-}
+};
 
 export const getChannelById = async (id: string) => {
   const channel = await db.channel.findUnique({
@@ -53,4 +53,4 @@ export const getChannelById = async (id: string) => {
   });
 
   return channel;
-}
+};

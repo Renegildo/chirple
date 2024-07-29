@@ -16,7 +16,7 @@ export const createMessage = async (
   });
 
   return newMessage;
-}
+};
 
 export const getMessagesByChannelId = async (channelId: string) => {
   const messages = await db.message.findMany({
@@ -32,7 +32,7 @@ export const getMessagesByChannelId = async (channelId: string) => {
   });
 
   return messages;
-}
+};
 
 export const deleteMessage = async (id: string) => {
   const deletedMessage = await db.message.update({
@@ -45,7 +45,7 @@ export const deleteMessage = async (id: string) => {
   });
 
   return deletedMessage;
-}
+};
 
 export const updateMessage = async (id: string, data: any) => {
   const updatedMessage = await db.message.update({
@@ -57,7 +57,7 @@ export const updateMessage = async (id: string, data: any) => {
   });
 
   return updatedMessage;
-}
+};
 
 export const getMessageById = async (id: string) => {
   const message = await db.message.findUnique({
@@ -65,4 +65,4 @@ export const getMessageById = async (id: string) => {
   });
 
   return message;
-}
+};

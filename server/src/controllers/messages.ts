@@ -1,19 +1,19 @@
-import { getChannelById } from '../db/channels';
+import { getChannelById } from "../db/channels";
 import {
   createMessage,
   deleteMessage,
   getMessageById,
   getMessagesByChannelId as getMessages,
-  updateMessage
-} from '../db/messages';
-import express from 'express';
+  updateMessage,
+} from "../db/messages";
+import express from "express";
 import { IRequest } from "../types";
 
 export const sendMessage = async (req: IRequest, res: express.Response) => {
   try {
     const { message, channelId, imageUrl } = req.body;
 
-    if (!channelId || !message && !imageUrl) {
+    if (!channelId || (!message && !imageUrl)) {
       return res.sendStatus(400);
     }
 
@@ -32,16 +32,24 @@ export const sendMessage = async (req: IRequest, res: express.Response) => {
       return res.sendStatus(403);
     }
 
-    const newMessage = await createMessage(message, req.user.id, channelId, imageUrl);
+    const newMessage = await createMessage(
+      message,
+      req.user.id,
+      channelId,
+      imageUrl,
+    );
 
     return res.status(200).json(newMessage);
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
-export const getMessagesByChannelId = async (req: IRequest, res: express.Response) => {
+export const getMessagesByChannelId = async (
+  req: IRequest,
+  res: express.Response,
+) => {
   try {
     const { channelId } = req.params;
 
@@ -70,7 +78,7 @@ export const getMessagesByChannelId = async (req: IRequest, res: express.Respons
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const removeMessage = async (req: IRequest, res: express.Response) => {
   try {
@@ -93,7 +101,7 @@ export const removeMessage = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const editMessage = async (req: IRequest, res: express.Response) => {
   try {
@@ -115,4 +123,4 @@ export const editMessage = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};

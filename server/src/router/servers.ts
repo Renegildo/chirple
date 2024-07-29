@@ -9,9 +9,9 @@ import {
   leaveServer,
   getPublicServers,
   joinPublicServer,
-} from '../controllers/servers';
-import { isAuthenticated } from '../middlewares';
-import express from 'express';
+} from "../controllers/servers";
+import { isAuthenticated } from "../middlewares";
+import express from "express";
 
 export default (router: express.Router) => {
   router.post("/server", isAuthenticated, createServer);

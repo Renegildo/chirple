@@ -1,6 +1,6 @@
-import { isAuthenticated } from '../middlewares';
-import { login, logout, register, self } from '../controllers/authentication';
-import express from 'express';
+import { isAuthenticated } from "../middlewares";
+import { login, logout, register, self } from "../controllers/authentication";
+import express from "express";
 
 export default (router: express.Router) => {
   router.post("/auth/register", register);

@@ -1,6 +1,6 @@
-import express from 'express';
+import express from "express";
 
-import { IRequest } from '../types';
+import { IRequest } from "../types";
 import {
   createServer as newServer,
   getServerById as getServer,
@@ -11,9 +11,9 @@ import {
   leaveServer as leaveServerDb,
   getMembersInServer,
   getMemberByUserIdServerId,
-  getPublicServers as getPublicServersDb
-} from '../db/servers';
-import { deleteInvite, getInviteById, useInvite } from '../db/invites';
+  getPublicServers as getPublicServersDb,
+} from "../db/servers";
+import { deleteInvite, getInviteById, useInvite } from "../db/invites";
 
 export const createServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -27,7 +27,7 @@ export const createServer = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const getServerById = async (req: IRequest, res: express.Response) => {
   try {
@@ -44,14 +44,14 @@ export const getServerById = async (req: IRequest, res: express.Response) => {
     }
 
     let isOnServer = false;
-    server.members.map(member => {
+    server.members.map((member) => {
       if (member.userId === req.user.id) {
         isOnServer = true;
       }
     });
 
     if (!isOnServer) {
-      return res.sendStatus(403)
+      return res.sendStatus(403);
     }
 
     return res.status(200).json(server);
@@ -59,7 +59,7 @@ export const getServerById = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const joinServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -83,7 +83,10 @@ export const joinServer = async (req: IRequest, res: express.Response) => {
       return res.sendStatus(400);
     }
 
-    const existingMember = await getMemberByUserIdServerId(userId, invite.serverId);
+    const existingMember = await getMemberByUserIdServerId(
+      userId,
+      invite.serverId,
+    );
     if (existingMember) return res.sendStatus(409);
 
     const serverUser = await enterServer(invite.serverId, userId);
@@ -94,9 +97,12 @@ export const joinServer = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
-export const joinPublicServer = async (req: IRequest, res: express.Response) => {
+export const joinPublicServer = async (
+  req: IRequest,
+  res: express.Response,
+) => {
   try {
     const { serverId } = req.body;
 
@@ -110,7 +116,10 @@ export const joinPublicServer = async (req: IRequest, res: express.Response) => 
       return res.sendStatus(404);
     }
 
-    const existingMember = await getMemberByUserIdServerId(req.user.id, serverId);
+    const existingMember = await getMemberByUserIdServerId(
+      req.user.id,
+      serverId,
+    );
     if (existingMember) {
       return res.sendStatus(409);
     }
@@ -121,7 +130,7 @@ export const joinPublicServer = async (req: IRequest, res: express.Response) => 
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const leaveServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -140,7 +149,7 @@ export const leaveServer = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const updateServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -163,7 +172,7 @@ export const updateServer = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const getMembers = async (req: IRequest, res: express.Response) => {
   try {
@@ -176,12 +185,11 @@ export const getMembers = async (req: IRequest, res: express.Response) => {
     const members = await getMembersInServer(id);
 
     return res.status(200).json(members);
-
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const deleteServer = async (req: IRequest, res: express.Response) => {
   try {
@@ -204,7 +212,7 @@ export const deleteServer = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
 export const banUser = async (req: IRequest, res: express.Response) => {
   try {
@@ -227,9 +235,12 @@ export const banUser = async (req: IRequest, res: express.Response) => {
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
 
-export const getPublicServers = async (req: IRequest, res: express.Response) => {
+export const getPublicServers = async (
+  req: IRequest,
+  res: express.Response,
+) => {
   try {
     const publicServers = await getPublicServersDb();
 
@@ -238,4 +249,4 @@ export const getPublicServers = async (req: IRequest, res: express.Response) => 
     console.log(error);
     return res.sendStatus(400);
   }
-}
+};
