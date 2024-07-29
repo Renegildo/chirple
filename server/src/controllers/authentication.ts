@@ -67,7 +67,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       secure: process.env.NODE_ENV === "production",
-      domain: process.env.NODE_ENV === "production" ? ".chirple.vercel.app" : undefined,
+      domain: process.env.NODE_ENV === "production" ? "chirple.vercel.app" : undefined,
     }).json({ ...user, token });
   } catch (error) {
     console.log(error);
