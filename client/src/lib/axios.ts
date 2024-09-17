@@ -1,6 +1,7 @@
+import { baseServerUrl } from '@/utils/constants';
 import axios from 'axios';
 
 export const api = axios.create({
-  baseURL: "chirple-api.onrender.com",
+  baseURL: baseServerUrl,
   withCredentials: true,
 });
