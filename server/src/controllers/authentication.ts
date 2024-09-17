@@ -83,7 +83,7 @@ export const login = async (req: express.Request, res: express.Response) => {
         secure: process.env.NODE_ENV === "production",
         domain:
           process.env.NODE_ENV === "production"
-            ? "chirple.vercel.app"
+            ? ".chirple.vercel.app"
             : undefined,
       })
       .json({ ...user, token });
