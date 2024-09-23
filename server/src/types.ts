@@ -13,4 +13,5 @@ export interface IRequest extends express.Request {
   body: any;
   params: any;
   cookies: any;
+  file?: Express.Multer.File;
 }
