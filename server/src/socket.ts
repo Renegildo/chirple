@@ -36,7 +36,6 @@ export const initSocket = (httpServer: http.Server<typeof http.IncomingMessage, 
 
   io.on("connection", (socket: ISocket) => {
     socket.on("joinRoom", async ({ serverId }) => {
-      console.log("joining server: ", serverId);
       if (!serverId) return;
 
       const server = await getServerById(serverId);
@@ -58,16 +57,6 @@ export const initSocket = (httpServer: http.Server<typeof http.IncomingMessage, 
     socket.on(
       "sendMessage",
       ({ id, message, owner, imageUrl, channelId, ownerId }) => {
-        console.log("aqui no sendMessage", {
-          id,
-          message,
-          owner,
-          imageUrl,
-          channelId,
-          ownerId,
-          serverId: socket.serverId,
-        });
-
         if (
           !id ||
           !socket.serverId ||
