@@ -70,7 +70,7 @@ const UploadImageModal = ({
             <input
               className="text-white bg-[#1e1f22] rounded-sm w-full p-2"
               id="imageUrl"
-              placeholder="https://imagens.com/1958318432134"
+              placeholder="(opcional)"
               onChange={(e) => setImageUrl(e.target.value)}
             />
           </div>
