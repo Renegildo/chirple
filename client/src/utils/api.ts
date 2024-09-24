@@ -1,5 +1,6 @@
 import { api } from '@/lib/axios';
 import { User, Server, Message, Channel } from './types';
+import axios from 'axios';
 
 export const login = async (email: string, password: string) => {
   const userResponse = await api.post(
@@ -218,4 +219,18 @@ export const joinPublicServer = async (serverId: string) => {
   const newMember = await api.post("/joinPublic", { serverId });
 
   return newMember.data;
+}
+
+export const uploadFile = async (file: File) => {
+  const form = new FormData();
+
+  form.append("file", file);
+
+  const imageUrl = await api.post("/upload", form, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+
+  return imageUrl.data;
 }
