@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { errorCodes } from "@/utils/utils";
+import GithubButton from "../(components)/github-button";
 
 interface FormData {
   email: string;
@@ -119,6 +120,7 @@ const RegisterPage = () => {
         >
           Registrar
         </button>
+        <GithubButton />
         <Link
           href={"/login"}
           className="text-center font-semibold text-xs underline"
