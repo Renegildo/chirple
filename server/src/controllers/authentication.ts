@@ -103,4 +103,5 @@ export const self = (req: IRequest, res: express.Response) => {
 
 export const logout = (req: express.Request, res: express.Response) => {
   res.clearCookie("token", { httpOnly: true }).sendStatus(200);
+  res.clearCookie("github_token", { httpOnly: true }).sendStatus(200);
 };
