@@ -1,3 +1,4 @@
+import { GithubUser } from "types";
 import { saltRounds } from "../config/constants";
 import db from "./prismaClient";
 import { hash } from "bcrypt";
@@ -60,6 +61,25 @@ export const createUser = async (
       email,
       username,
       password: hashedPassword,
+    },
+  });
+
+  return newUser;
+};
+
+export const createGithubUser = async (
+  githubUser: GithubUser,
+) => {
+  const { email, id, bio, name, avatar_url } = githubUser;
+
+  const newUser = await db.user.create({
+    data: {
+      email: email || "",
+      aboutMe: bio,
+      username: name,
+      id: String(id),
+      password: "",
+      imageUrl: avatar_url,
     },
   });
 

@@ -1,7 +1,9 @@
 import express from "express";
-import { IRequest } from "types";
+import { GithubUser, IRequest } from "types";
 import { verify } from "jsonwebtoken";
-import { getUserById } from "../db/users";
+import { createGithubUser, getUserById } from "../db/users";
+import axios from "axios";
+import { User } from "@prisma/client";
 
 export const isAuthenticated = async (
   req: IRequest,
@@ -10,16 +12,41 @@ export const isAuthenticated = async (
 ) => {
   try {
     const token = req.cookies["token"];
+    const githubToken = req.cookies.github_token;
 
-    if (!token) {
+    if (!token && !githubToken) {
       return res.sendStatus(403);
     }
 
-    const { userId } = verify(token, process.env.JWT_SECRET) as {
-      userId: string;
-    };
+    let user: User;
 
-    const user = await getUserById(userId);
+    if (token) {
+      const { userId } = verify(token, process.env.JWT_SECRET) as {
+        userId: string;
+      };
+
+      user = await getUserById(userId);
+    }
+
+    if (!user && githubToken) {
+      const { data: githubUser } = await axios.get("https://api.github.com/user", {
+        headers: {
+          Authorization: `Bearer ${githubToken}`
+        },
+      }) as { data: GithubUser };
+
+      user = await getUserById(String(githubUser.id));
+
+      if (!user) {
+        const newUser = await createGithubUser(githubUser);
+
+        user = newUser;
+      }
+    }
+
+    if (!user) {
+      return res.sendStatus(403);
+    }
 
     req.user = user;
 

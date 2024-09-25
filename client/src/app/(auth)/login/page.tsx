@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 import { errorCodes } from "@/utils/utils";
+import axios from "axios";
+import { baseServerUrl } from "@/utils/constants";
+import { Github } from "lucide-react";
 
 interface FormData {
   email: string;
@@ -45,6 +48,10 @@ const LoginPage = () => {
       const newErrorCode = error?.response?.data?.errorCode;
       if (newErrorCode) setErrorCode(newErrorCode);
     }
+  }
+
+  const handleGithubLogin = () => {
+    window.location.href = baseServerUrl + "/auth/github";
   }
 
   return (
@@ -99,6 +106,10 @@ const LoginPage = () => {
           className="bg-[#5865f2] hover:bg-[#4f5acb] text-sm w-full py-3 rounded-md transition-colors"
         >
           Login
+        </button>
+        <button type="button" onClick={handleGithubLogin} className="bg-[#1E1F22] py-3 rounded-md text-sm flex items-center justify-center gap-2 hover:bg-[#1E1F22]/80 transition-colors">
+          Entrar com Github
+          <Github />
         </button>
         <Link href={"/register"} className="text-center font-semibold text-xs underline">
           Ainda nao tem uma conta?
