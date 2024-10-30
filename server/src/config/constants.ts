@@ -4,10 +4,12 @@ export const cloudinaryFolders = {
   avatars: "avatars",
 };
 
-export const clientUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://chirple.vercel.app"
-    : "http://192.168.100.123:3000";
+// export const clientUrl =
+//   process.env.NODE_ENV === "production"
+//     ? "https://chirple.vercel.app"
+//     : "http://192.168.100.123:3000";
+
+export const clientUrl = "http://100.65.15.30";
 
 export const PORT: number = process.env.PORT ? Number(process.env.PORT) : 8080;
 
